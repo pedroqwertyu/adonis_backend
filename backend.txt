@@ -1,0 +1,21 @@
+Node 
+
+npm init
+npm i express
+npm i nodemon
+node index.js
+npx nodemon
+_____________________________________
+
+Adonis
+
+npm init adonis-ts-app@latest project
+cd project
+node ace serve --watch
+
+node ace make:controller
+
+npm i @adonisjs/lucid
+node ace configure @adonisjs/lucid
+
+node ace make:migration
