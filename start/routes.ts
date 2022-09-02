@@ -24,4 +24,8 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
-Route.post('/lista1/ex1', 'Lista2sController.ex1')
+Route.post('/lista2/ex1', 'Lista2sController.ex1')
+
+Route.post('/lista2/ex2', 'Lista2sController.ex2')
+
+Route.post('/lista2/ex3', 'Lista2sController.ex3')
