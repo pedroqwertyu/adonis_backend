@@ -13,9 +13,9 @@ npm init adonis-ts-app@latest project
 cd project
 node ace serve --watch
 
-node ace make:controller
-
 npm i @adonisjs/lucid
 node ace configure @adonisjs/lucid
 
-node ace make:migration
+node ace make:controller Curso
+node ace make:model Curso
+node ace make:migration Curso
