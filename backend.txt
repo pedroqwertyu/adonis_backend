@@ -17,5 +17,7 @@ npm i @adonisjs/lucid
 node ace configure @adonisjs/lucid
 
 node ace make:controller Curso
+
+node ace make:model Curso -m
 node ace make:model Curso
 node ace make:migration Curso

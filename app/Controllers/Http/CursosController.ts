@@ -8,8 +8,8 @@ export default class CursosController {
         return Curso.all()
     }
 
-    store(){
-        const dados = {nome: 'ADS', duracao: 5, modalidade: 'P'}
+    store({request}){
+        const dados = request.body()
         return Curso.create(dados)
     }
 }
