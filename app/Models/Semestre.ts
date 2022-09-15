@@ -5,6 +5,15 @@ export default class Semestre extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public nome: string
+
+  @column()
+  public dataInicio: number
+
+  @column()
+  public dataFim: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

@@ -5,6 +5,12 @@ export default class Chamada extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public aulaId: number
+
+  @column()
+  public alunoId: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
