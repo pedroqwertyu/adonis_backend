@@ -9,7 +9,7 @@ export default class CursosController {
     }
 
     store({request}){
-        const dados = request.body()
+        const dados = request.only(['nome', 'duracao', 'modalidade'])
         return Curso.create(dados)
     }
 }
