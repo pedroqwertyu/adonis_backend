@@ -24,3 +24,5 @@ node ace make:migration Curso
 
 node ace make:seeder curso
 node ace db:seed
+
+;
