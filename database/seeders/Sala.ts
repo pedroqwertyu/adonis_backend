@@ -5,6 +5,7 @@ export default class extends BaseSeeder {
   public async run () {
     await Sala.createMany([
       {nome: 'B1001', capacidade: 40, tipo: 'GG'},
+      {nome: 'A902', capacidade: 40, tipo: 'P'},
     ])
   }
 }
