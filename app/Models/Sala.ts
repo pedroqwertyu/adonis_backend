@@ -9,7 +9,7 @@ export default class Sala extends BaseModel {
   public nome: string
 
   @column()
-  public duracao: number
+  public capacidade: number
 
   @column()
   public tipo: string

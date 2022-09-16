@@ -11,6 +11,9 @@ export default class Chamada extends BaseModel {
   @column()
   public alunoId: number
 
+  @column()
+  public presenca: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
