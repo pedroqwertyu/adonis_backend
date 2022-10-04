@@ -21,13 +21,8 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', async () => {
-  return { hello: 'world' }
+  return { eu: 'oi' }
 })
 
-Route.get('/cursos', 'CursosController.index')
-
-Route.post('/cursos', 'CursosController.store')
-
-Route.get('/disciplinas', 'DisciplinasController.index')
-
-Route.post('/disciplinas', 'DisciplinasController.store')
+Route.resource('/cursos', 'CursosController').apiOnly()
+Route.resource('/disciplinas', 'DisciplinasController').apiOnly()
