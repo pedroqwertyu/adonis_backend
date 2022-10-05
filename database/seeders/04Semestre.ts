@@ -4,8 +4,8 @@ import Semestre from 'App/Models/Semestre'
 export default class extends BaseSeeder {
   public async run () {
     await Semestre.createMany([
-      {nome: "semestre 1", dataInicio: 30022022, dataFim: 15092022},
-      {nome: "semestre 2", dataInicio: 11022023, dataFim: 15092023},
+      {nome: "semestre 1", dataInicio: new Date (20223002), dataFim: new Date (20221509)},
+      {nome: "semestre 2", dataInicio: new Date (20231102), dataFim: new Date (20231509)},
     ])
   }
 }

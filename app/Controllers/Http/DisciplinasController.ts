@@ -38,8 +38,10 @@ export default class DisciplinasController {
     async update({request}){
 
         const id = request.param('id')
+        const dados = request.only(['nome', 'cursoId'])
         const disciplina = await Disciplina.findOrFail(id)
 
+        disciplina.merge(dados)
         return disciplina.save()
 
     }

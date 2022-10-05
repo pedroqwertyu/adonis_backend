@@ -38,8 +38,10 @@ export default class CursosController {
     async update({request}){
 
         const id = request.param('id')
+        const dados = request.only(['nome', 'duracao', 'modalidade'])
         const curso = await Curso.findOrFail(id)
 
+        curso.merge(dados)
         return curso.save()
 
     }
