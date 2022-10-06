@@ -4,10 +4,23 @@ import Disciplina from "App/Models/Disciplina";
 
 export default class DisciplinasController {
 
-    index(){
+    index({request}){
 
-        return Disciplina.all()
+        const {cursoId,id,nome} = request.all()
 
+        const disciplinas = Disciplina.query().select('id', 'nome', 'cursoId')
+        if (cursoId) {
+            disciplinas.where('cursoId', cursoId)
+        }
+
+        if (id) {
+            disciplinas.where('id', id)
+        }
+
+        if (nome) {
+            disciplinas.where('nome', nome)
+        }
+        return disciplinas
     }
 
     store({request}){
