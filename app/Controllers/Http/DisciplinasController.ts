@@ -18,7 +18,7 @@ export default class DisciplinasController {
         }
 
         if (nome) {
-            disciplinas.where('nome', nome)
+            disciplinas.where('nome', 'like', '%' + nome + '%')
         }
         return disciplinas
     }
