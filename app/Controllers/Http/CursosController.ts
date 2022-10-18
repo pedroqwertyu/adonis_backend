@@ -7,7 +7,7 @@ export default class CursosController {
     index({request}){
 
         const {id, nome, duracao, modalidade} = request.all()
-        
+
         const cursos = Curso.query().preload('disciplinas').select('id', 'nome', 'duracao', 'modalidade')
 
         if (id) {
@@ -15,7 +15,7 @@ export default class CursosController {
         }
 
         if (nome) {
-            cursos.where('nome', nome)
+            cursos.where('nome', 'like', '%' + nome + '%')
         }
 
         if (duracao) {
