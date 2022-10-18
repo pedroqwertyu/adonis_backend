@@ -4,9 +4,29 @@ import Curso from "App/Models/Curso";
 
 export default class CursosController {
 
-    index(){
+    index({request}){
 
-        return Curso.all()
+        const {id, nome, duracao, modalidade} = request.all()
+        
+        const cursos = Curso.query().preload('disciplinas').select('id', 'nome', 'duracao', 'modalidade')
+
+        if (id) {
+            cursos.where('id', id)
+        }
+
+        if (nome) {
+            cursos.where('nome', nome)
+        }
+
+        if (duracao) {
+            cursos.where('duracao', duracao)
+        }
+
+        if (modalidade) {
+            cursos.where('modalidade', modalidade)
+        }
+
+        return cursos
 
     }
 
