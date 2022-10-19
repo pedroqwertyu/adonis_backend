@@ -9,7 +9,7 @@ _____________________________________
 
 Adonis
 
-npm init adonis-ts-app@latest project
+npm init adonis-ts-app@latest NOMEDOPROJETO
 cd project
 node ace serve --watch
 
