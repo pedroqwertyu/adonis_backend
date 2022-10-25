@@ -22,5 +22,5 @@ export default class Sala extends BaseModel {
   public updatedAt: DateTime
 
   @hasMany( ()=> Turma )
-   public turmas: HasMany<typeof Turma>
+  public turmas: HasMany<typeof Turma>
 }
