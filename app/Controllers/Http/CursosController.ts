@@ -7,7 +7,8 @@ export default class CursosController {
 
     async index({ request }) {
 
-        const { id, nome, duracao, modalidade } = await request.validate(CursoValidator)
+        const id = request.param('id')
+        const { nome, duracao, modalidade } = await request.validate(CursoValidator)
 
         const cursos = Curso.query().preload('disciplinas').select('id', 'nome', 'duracao', 'modalidade')
 
