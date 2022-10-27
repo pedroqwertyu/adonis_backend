@@ -3,9 +3,49 @@
 import Turma from "App/Models/Turma"
 
 export default class TurmasController {
-    index() {
+    index({ request }) {
 
-        return Turma.all()
+        const { id, nome, professorId, semestreId, disciplinaId, salaId, turno } = request.all()
+
+        const turmas = Turma.query().preload('aulas').select(
+            'id',
+            'nome',
+            'professorId',
+            'semestreId',
+            'disciplinaId',
+            'salaId',
+            'turno'
+        )
+
+        if (id) {
+            turmas.where('id', id)
+        }
+
+        if (nome) {
+            turmas.where('nome', 'like', '%' + nome + '%')
+        }
+
+        if (professorId) {
+            turmas.where('professorId', professorId)
+        }
+
+        if (semestreId) {
+            turmas.where('semestreId', semestreId)
+        }
+
+        if (disciplinaId) {
+            turmas.where('disciplinaId', disciplinaId)
+        }
+
+        if (salaId) {
+            turmas.where('salaId', salaId)
+        }
+
+        if (turno) {
+            turmas.where('turno', turno)
+        }
+
+        return turmas
 
     }
 
@@ -52,7 +92,7 @@ export default class TurmasController {
             'salaId',
             'turno'
         ])
-        
+
         const turma = await Turma.findOrFail(id)
 
         turma.merge(dados)

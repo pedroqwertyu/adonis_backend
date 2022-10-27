@@ -3,9 +3,81 @@
 import Aluno from "App/Models/Aluno"
 
 export default class AlunosController {
-    index() {
+    index({ request }) {
 
-        return Aluno.all()
+        const {
+            id,
+            nome,
+            cpf,
+            matricula,
+            email,
+            telefone,
+            cep,
+            logradouro,
+            complemento,
+            bairro,
+            numero
+        } = request.all()
+
+        const alunos = Aluno.query().preload('turmas').select(
+            'id',
+            'nome',
+            'cpf',
+            'matricula',
+            'email',
+            'telefone',
+            'cep',
+            'logradouro',
+            'complemento',
+            'numero',
+            'bairro'
+        )
+
+        if (id) {
+            alunos.where('id', id)
+        }
+
+        if (nome) {
+            alunos.where('nome', 'like', '%' + nome + '%')
+        }
+
+        if (cpf) {
+            alunos.where('cpf', 'like', cpf + '%')
+        }
+
+        if (matricula) {
+            alunos.where('matricula', 'like', matricula + '%')
+        }
+
+        if (email) {
+            alunos.where('email', 'like', email + '%')
+        }
+
+        if (telefone) {
+            alunos.where('telefone', 'like', telefone + '%')
+        }
+
+        if (cep) {
+            alunos.where('cep', 'like', cep + '%')
+        }
+
+        if (logradouro) {
+            alunos.where('logradouro', 'like', '%' + logradouro + '%')
+        }
+
+        if (complemento) {
+            alunos.where('complemento', 'like', '%' + complemento + '%')
+        }
+
+        if (bairro) {
+            alunos.where('bairro', 'like', '%' + bairro + '%')
+        }
+
+        if (numero) {
+            alunos.where('numero', numero)
+        }
+
+        return alunos
 
     }
 
@@ -60,7 +132,7 @@ export default class AlunosController {
             'numero',
             'bairro'
         ])
-        
+
         const aluno = await Aluno.findOrFail(id)
 
         aluno.merge(dados)

@@ -1,12 +1,13 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Curso from "App/Models/Curso";
+import CursoValidator from "App/Validators/CursoValidator";
 
 export default class CursosController {
 
-    index({request}){
+    async index({ request }) {
 
-        const {id, nome, duracao, modalidade} = request.all()
+        const { id, nome, duracao, modalidade } = await request.validate(CursoValidator)
 
         const cursos = Curso.query().preload('disciplinas').select('id', 'nome', 'duracao', 'modalidade')
 
@@ -30,15 +31,15 @@ export default class CursosController {
 
     }
 
-    store({request}){
+    async store({ request }) {
 
-        const dados = request.only(['nome', 'duracao', 'modalidade'])
+        const dados = await request.validate(CursoValidator)
 
         return Curso.create(dados)
 
     }
 
-    show({request}){
+    show({ request }) {
 
         const id = request.param('id')
 
@@ -46,7 +47,7 @@ export default class CursosController {
 
     }
 
-    async destroy({request}){
+    async destroy({ request }) {
 
         const id = request.param('id')
         const curso = await Curso.findOrFail(id)
@@ -55,10 +56,10 @@ export default class CursosController {
 
     }
 
-    async update({request}){
+    async update({ request }) {
 
         const id = request.param('id')
-        const dados = request.only(['nome', 'duracao', 'modalidade'])
+        const dados = request.validade(CursoValidator)
         const curso = await Curso.findOrFail(id)
 
         curso.merge(dados)

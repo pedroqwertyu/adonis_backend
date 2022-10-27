@@ -3,9 +3,28 @@
 import Aula from "App/Models/Aula"
 
 export default class AulasController {
-    index() {
+    index({ request }) {
 
-        return Aula.all()
+        const { id, data, conteudo, turmaId } = request.all()
+
+        const aulas = Aula.query().preload('alunos').select('id', 'data', 'conteudo', 'turmaId')
+
+        if (id) {
+            aulas.where('id', id)
+        }
+        if (data) {
+            aulas.where('data', 'like', data + '%')
+        }
+
+        if (conteudo) {
+            aulas.where('conteudo', 'like', '%' + conteudo + '%')
+        }
+
+        if (turmaId) {
+            aulas.where('turmaId', turmaId)
+        }
+
+        return aulas
 
     }
 

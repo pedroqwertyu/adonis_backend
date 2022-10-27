@@ -3,21 +3,41 @@
 import Sala from "App/Models/Sala"
 
 export default class SalasController {
-    index(){
+    index({ request }) {
 
-        return Sala.all()
+        const { id, nome, capacidade, tipo } = request.all()
+
+        const salas = Sala.query().preload('turmas').select('id', 'nome', 'capacidade', 'tipo')
+
+        if (id) {
+            salas.where('id', id)
+        }
+
+        if (nome) {
+            salas.where('nome', 'like', '%' + nome + '%')
+        }
+
+        if (capacidade) {
+            salas.where('capacidade', 'like', '%' + capacidade + '%')
+        }
+
+        if (tipo) {
+            salas.where('tipo', tipo)
+        }
+
+        return salas
 
     }
 
-    store({request}){
+    store({ request }) {
 
         const dados = request.only(['nome', 'capacidade', 'tipo'])
 
         return Sala.create(dados)
-        
+
     }
 
-    show({request}){
+    show({ request }) {
 
         const id = request.param('id')
 
@@ -25,7 +45,7 @@ export default class SalasController {
 
     }
 
-    async destroy({request}){
+    async destroy({ request }) {
 
         const id = request.param('id')
         const sala = await Sala.findOrFail(id)
@@ -34,7 +54,7 @@ export default class SalasController {
 
     }
 
-    async update({request}){
+    async update({ request }) {
 
         const id = request.param('id')
         const dados = request.only(['nome', 'capacidade', 'tipo'])

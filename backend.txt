@@ -25,4 +25,6 @@ node ace make:migration NOMEDATABELA
 node ace make:seeder NOMEDATABELA
 node ace db:seed
 
+node ace make:validator NOMEDATABELA
+
 node ace list:routes

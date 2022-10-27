@@ -3,21 +3,33 @@
 import Semestre from "App/Models/Semestre"
 
 export default class SemestresController {
-    index(){
+    index({ request }) {
 
-        return Semestre.all()
+        const { id, nome } = request.all()
+
+        const semestres = Semestre.query().preload('turmas').select('id', 'nome', 'dataInicio', 'dataFim')
+
+        if (id) {
+            semestres.where('id', id)
+        }
+
+        if (nome) {
+            semestres.where('nome', 'like', '%' + nome + '%')
+        }
+
+        return semestres
 
     }
 
-    store({request}){
+    store({ request }) {
 
         const dados = request.only(['nome', 'dataInicio', 'dataFim'])
 
         return Semestre.create(dados)
-        
+
     }
 
-    show({request}){
+    show({ request }) {
 
         const id = request.param('id')
 
@@ -25,7 +37,7 @@ export default class SemestresController {
 
     }
 
-    async destroy({request}){
+    async destroy({ request }) {
 
         const id = request.param('id')
         const semestre = await Semestre.findOrFail(id)
@@ -34,7 +46,7 @@ export default class SemestresController {
 
     }
 
-    async update({request}){
+    async update({ request }) {
 
         const id = request.param('id')
         const dados = request.only(['nome', 'dataInicio', 'dataFim'])

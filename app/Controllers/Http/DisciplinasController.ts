@@ -4,9 +4,10 @@ import Disciplina from "App/Models/Disciplina";
 
 export default class DisciplinasController {
 
-    index({request}){
+    index({ request }) {
 
-        const {cursoId,id,nome} = request.all()
+        const { cursoId, id, nome } = request.all()
+
         const disciplinas = Disciplina.query().preload('curso').select('id', 'nome', 'cursoId')
 
         if (cursoId) {
@@ -20,18 +21,19 @@ export default class DisciplinasController {
         if (nome) {
             disciplinas.where('nome', 'like', '%' + nome + '%')
         }
+        
         return disciplinas
     }
 
-    store({request}){
+    store({ request }) {
 
         const dados = request.only(['nome', 'cursoId'])
 
         return Disciplina.create(dados)
-        
+
     }
 
-    show({request}){
+    show({ request }) {
 
         const id = request.param('id')
 
@@ -39,7 +41,7 @@ export default class DisciplinasController {
 
     }
 
-    async destroy({request}){
+    async destroy({ request }) {
 
         const id = request.param('id')
         const disciplina = await Disciplina.findOrFail(id)
@@ -48,7 +50,7 @@ export default class DisciplinasController {
 
     }
 
-    async update({request}){
+    async update({ request }) {
 
         const id = request.param('id')
         const dados = request.only(['nome', 'cursoId'])
