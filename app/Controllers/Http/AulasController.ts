@@ -1,11 +1,13 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Aula from "App/Models/Aula"
+import AulaValidator from "App/Validators/AulaValidator"
 
 export default class AulasController {
     index({ request }) {
-
-        const { id, data, conteudo, turmaId } = request.all()
+        
+        const id = request.param('id')
+        const { data, conteudo, turmaId } = request.validade(AulaValidator)
 
         const aulas = Aula.query().preload('alunos').select('id', 'data', 'conteudo', 'turmaId')
 
@@ -28,9 +30,9 @@ export default class AulasController {
 
     }
 
-    store({ request }) {
+    async store({ request }) {
 
-        const dados = request.only(['data', 'conteudo', 'turmaId'])
+        const dados = await request.validade(AulaValidator)
 
         return Aula.create(dados)
 
@@ -56,7 +58,7 @@ export default class AulasController {
     async update({ request }) {
 
         const id = request.param('id')
-        const dados = request.only(['data', 'conteudo', 'turmaId'])
+        const dados = await request.validade(AulaValidator)
         const aula = await Aula.findOrFail(id)
 
         aula.merge(dados)

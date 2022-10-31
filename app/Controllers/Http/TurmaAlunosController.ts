@@ -1,11 +1,13 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import TurmaAluno from "App/Models/TurmaAluno"
+import TurmaAlunoValidator from "App/Validators/TurmaAlunoValidator"
 
 export default class TurmaAlunosController {
-    index({ request }) {
+    async index({ request }) {
 
-        const { id, turmaId, alunoId } = request.all()
+        const id = request.param('id')
+        const { turmaId, alunoId } = await request.validade(TurmaAlunoValidator)
 
         const turmaAlunos = TurmaAluno.query().select('id', 'turmaId', 'alunoId')
 
@@ -25,9 +27,9 @@ export default class TurmaAlunosController {
 
     }
 
-    store({ request }) {
+    async store({ request }) {
 
-        const dados = request.only(['turmaId', 'alunoId'])
+        const dados = await request.validade(TurmaAlunoValidator)
 
         return TurmaAluno.create(dados)
 
@@ -53,7 +55,7 @@ export default class TurmaAlunosController {
     async update({ request }) {
 
         const id = request.param('id')
-        const dados = request.only(['turmaId', 'alunoId'])
+        const dados = await request.validade(TurmaAlunoValidator)
         const turmaAluno = await TurmaAluno.findOrFail(id)
 
         turmaAluno.merge(dados)

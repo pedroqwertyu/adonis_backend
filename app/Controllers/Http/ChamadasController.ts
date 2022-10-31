@@ -1,11 +1,12 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Chamada from "App/Models/Chamada"
+import ChamadaValidator from "App/Validators/ChamadaValidator"
 
 export default class ChamadasController {
-    index({ request }) {
-
-        const { id, aulaId, alunoId, presenca } = request.all()
+    async index({ request }) {
+        const id = request.param('id')
+        const { aulaId, alunoId, presenca } = await request.validade(ChamadaValidator)
 
         const chamadas = Chamada.query().select('id', 'aulaId', 'alunoId', 'presenca')
 
@@ -29,9 +30,9 @@ export default class ChamadasController {
 
     }
 
-    store({ request }) {
+    async store({ request }) {
 
-        const dados = request.only(['aulaId', 'alunoId', 'presenca'])
+        const dados = await request.validade(ChamadaValidator)
 
         return Chamada.create(dados)
 
@@ -57,7 +58,7 @@ export default class ChamadasController {
     async update({ request }) {
 
         const id = request.param('id')
-        const dados = request.only(['aulaId', 'alunoId', 'presenca'])
+        const dados = await request.validade(ChamadaValidator)
         const chamada = await Chamada.findOrFail(id)
 
         chamada.merge(dados)

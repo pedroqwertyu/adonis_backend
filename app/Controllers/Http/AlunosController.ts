@@ -1,12 +1,13 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Aluno from "App/Models/Aluno"
+import AlunoValidator from "App/Validators/AlunoValidator"
 
 export default class AlunosController {
-    index({ request }) {
+    async index({ request }) {
 
+        const id = request.param('id')
         const {
-            id,
             nome,
             cpf,
             matricula,
@@ -17,7 +18,7 @@ export default class AlunosController {
             complemento,
             bairro,
             numero
-        } = request.all()
+        } = await request.validade(AlunoValidator)
 
         const alunos = Aluno.query().preload('turmas').select(
             'id',
@@ -81,20 +82,9 @@ export default class AlunosController {
 
     }
 
-    store({ request }) {
+    async store({ request }) {
 
-        const dados = request.only([
-            'nome',
-            'cpf',
-            'matricula',
-            'email',
-            'telefone',
-            'cep',
-            'logradouro',
-            'complemento',
-            'numero',
-            'bairro'
-        ])
+        const dados = await request.validade(AlunoValidator)
 
         return Aluno.create(dados)
 
@@ -120,18 +110,7 @@ export default class AlunosController {
     async update({ request }) {
 
         const id = request.param('id')
-        const dados = request.only([
-            'nome',
-            'cpf',
-            'matricula',
-            'email',
-            'telefone',
-            'cep',
-            'logradouro',
-            'complemento',
-            'numero',
-            'bairro'
-        ])
+        const dados = await request.validade(AlunoValidator)
 
         const aluno = await Aluno.findOrFail(id)
 

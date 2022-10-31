@@ -1,11 +1,13 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Sala from "App/Models/Sala"
+import SalaValidator from "App/Validators/SalaValidator"
 
 export default class SalasController {
-    index({ request }) {
+    async index({ request }) {
 
-        const { id, nome, capacidade, tipo } = request.all()
+        const id = request.param('id')
+        const { nome, capacidade, tipo } = await request.validade(SalaValidator)
 
         const salas = Sala.query().preload('turmas').select('id', 'nome', 'capacidade', 'tipo')
 
@@ -29,9 +31,9 @@ export default class SalasController {
 
     }
 
-    store({ request }) {
+    async store({ request }) {
 
-        const dados = request.only(['nome', 'capacidade', 'tipo'])
+        const dados = await request.validade(SalaValidator)
 
         return Sala.create(dados)
 
@@ -57,7 +59,7 @@ export default class SalasController {
     async update({ request }) {
 
         const id = request.param('id')
-        const dados = request.only(['nome', 'capacidade', 'tipo'])
+        const dados = await request.validade(SalaValidator)
         const sala = await Sala.findOrFail(id)
 
         sala.merge(dados)

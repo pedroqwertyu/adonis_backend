@@ -1,12 +1,14 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Disciplina from "App/Models/Disciplina";
+import DisciplinaValidator from "App/Validators/DisciplinaValidator";
 
 export default class DisciplinasController {
 
-    index({ request }) {
+    async index({ request }) {
 
-        const { cursoId, id, nome } = request.all()
+        const id = request.param('id')
+        const { cursoId, nome } = await request.validade(DisciplinaValidator)
 
         const disciplinas = Disciplina.query().preload('curso').select('id', 'nome', 'cursoId')
 
@@ -25,9 +27,9 @@ export default class DisciplinasController {
         return disciplinas
     }
 
-    store({ request }) {
+    async store({ request }) {
 
-        const dados = request.only(['nome', 'cursoId'])
+        const dados = await request.validade(DisciplinaValidator)
 
         return Disciplina.create(dados)
 
@@ -53,7 +55,7 @@ export default class DisciplinasController {
     async update({ request }) {
 
         const id = request.param('id')
-        const dados = request.only(['nome', 'cursoId'])
+        const dados = await request.validade(DisciplinaValidator)
         const disciplina = await Disciplina.findOrFail(id)
 
         disciplina.merge(dados)

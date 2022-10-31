@@ -1,11 +1,13 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Semestre from "App/Models/Semestre"
+import SemestreValidator from "App/Validators/SemestreValidator"
 
 export default class SemestresController {
-    index({ request }) {
+    async index({ request }) {
 
-        const { id, nome } = request.all()
+        const id = request.param('id')
+        const { nome, dataFim, dataInicio } = await request.validade(SemestreValidator)
 
         const semestres = Semestre.query().preload('turmas').select('id', 'nome', 'dataInicio', 'dataFim')
 
@@ -17,13 +19,21 @@ export default class SemestresController {
             semestres.where('nome', 'like', '%' + nome + '%')
         }
 
+        if (dataInicio) {
+            semestres.where('dataInicio', 'like', '%' + dataInicio + '%')
+        }
+
+        if (dataFim) {
+            semestres.where('dataFim', 'like', '%' + dataFim + '%')
+        }
+
         return semestres
 
     }
 
-    store({ request }) {
+    async store({ request }) {
 
-        const dados = request.only(['nome', 'dataInicio', 'dataFim'])
+        const dados = await request.validade(SemestreValidator)
 
         return Semestre.create(dados)
 
@@ -49,7 +59,7 @@ export default class SemestresController {
     async update({ request }) {
 
         const id = request.param('id')
-        const dados = request.only(['nome', 'dataInicio', 'dataFim'])
+        const dados = await request.validade(SemestreValidator)
         const semestre = await Semestre.findOrFail(id)
 
         semestre.merge(dados)
