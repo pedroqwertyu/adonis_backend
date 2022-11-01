@@ -1,11 +1,13 @@
-import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class SemestreValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    nome: schema.string(),
+    nome: schema.string([
+      rules.maxLength(30)
+    ]),
     datainicio: schema.date(),
     dataFim: schema.date(),
   })

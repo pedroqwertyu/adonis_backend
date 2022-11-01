@@ -6,6 +6,7 @@ export default class CursoValidator {
 
   public schema = schema.create({
     nome: schema.string([
+      rules.maxLength(50),
       rules.alphaNum(),
       rules.unique({ table: 'cursos', column: 'nome'})
     ]),

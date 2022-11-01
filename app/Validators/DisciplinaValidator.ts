@@ -6,6 +6,7 @@ export default class DisciplinaValidator {
 
   public schema = schema.create({
     nome: schema.string.optional([
+      rules.maxLength(50),
       rules.alphaNum(),
       rules.unique({ table: 'disciplinas', column: 'nome'})
     ]),
