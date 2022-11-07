@@ -43,3 +43,5 @@ Route.resource('/semestres', 'SemestresController').apiOnly()
 Route.resource('/turmaAlunos', 'TurmaAlunosController').apiOnly()
 
 Route.resource('/turmas', 'TurmasController').apiOnly()
+
+Route.post('/users', 'UsersController.store')

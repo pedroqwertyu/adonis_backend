@@ -28,3 +28,9 @@ node ace db:seed
 node ace make:validator NOMEDATABELA
 
 node ace list:routes
+
+npm i @adonisjs/auth
+
+node ace configure @adonisjs/auth
+
+npm i phc-argon2
