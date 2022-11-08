@@ -9,4 +9,12 @@ export default class UsersController {
         const dados = request.only(['email', 'password'])
         return await User.create(dados)
     }
+
+    async login ({request, auth}){
+
+        const {email, password} = request.only(['email', 'password'])
+        const token = await auth.use('api').attempt(email,password)
+
+        return token
+    }
 }
