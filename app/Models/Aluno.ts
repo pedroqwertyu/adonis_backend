@@ -43,9 +43,9 @@ export default class Aluno extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @manyToMany( () => Turma, {pivotTable: 'chamadas'})
+  @manyToMany( () => Turma, {pivotTable: 'turma_alunos'})
   public turmas: ManyToMany <typeof Turma>
 
-  @manyToMany( () => Aula, {pivotTable: 'turma_alunos'})
+  @manyToMany( () => Aula, {pivotTable: 'chamadas'})
   public aulas: ManyToMany <typeof Aula>
 }
